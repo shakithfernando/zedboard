@@ -401,6 +401,7 @@ static int analog_drm_encoder_set_clock(struct analog_drm_private *private, long
 	const struct analog_drm_crtc_clock_setting *best_setting;
 	unsigned int i;
 
+    printk("Debug2: analog_drm_encoder_set_clock\n");
 	best_setting = analog_drm_encoder_closest_clock(clock);
 
 	if (!best_setting)
@@ -430,9 +431,11 @@ static void analog_drm_encoder_mode_set(struct drm_encoder *encoder,
 	unsigned int htotal, hactive;
 	unsigned int vtotal, vactive;
 
+    printk("Debug1a: analog_drm_encoder_mode_set\n");
 	if (sfuncs && sfuncs->mode_set)
 		sfuncs->mode_set(encoder, mode, adjusted_mode);
 
+    printk("Debug1b: analog_drm_encoder_mode_set\n");
 	htotal = mode->htotal;
 	hactive = mode->hdisplay;
 	vtotal = mode->vtotal;
@@ -446,6 +449,7 @@ static void analog_drm_encoder_mode_set(struct drm_encoder *encoder,
 	v_de_min =  vtotal - mode->vsync_start;
 	v_de_max =  v_de_min + mode->vdisplay;
 
+    printk("Debug1c: analog_drm_encoder_mode_set\n");
 	iowrite32((hactive << 16) | htotal, private->base + ANALOG_REG_HTIMING1);
 	iowrite32((h_de_min << 16) | h_de_max, private->base + ANALOG_REG_HTIMING2);
 	iowrite32((vactive << 16) | vtotal, private->base + ANALOG_REG_VTIMING1);
